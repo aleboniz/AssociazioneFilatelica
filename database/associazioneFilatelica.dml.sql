@@ -1,5 +1,13 @@
 USE associazioneFilatelica;
 
+INSERT INTO collezionisti(nome, cognome) VALUE
+  ("Mario", "Guanciale"),
+  ("Luigi", "Serniotti"),
+  ("Sara", "Bonifacio"),
+  ("Michele", "Franceschini"),
+  ("Lucia", "Quaranta"),
+  ("Andrea", "Vettori");
+
 INSERT INTO collezioni(titolo, tema) VALUE
   ("Olimpiadi 1960", "sport"),
   ("Hollywood", "cinema"),
