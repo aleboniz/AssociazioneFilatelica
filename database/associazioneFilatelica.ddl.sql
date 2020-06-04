@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS associazioneFilatelica;
 CREATE DATABASE associazioneFilatelica;
 USE associazioneFilatelica;
 
-CREATE TABLE collezionista(
+CREATE TABLE collezionisti(
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(30) NOT NULL,
   cognome VARCHAR(30) NOT NULL
@@ -13,7 +13,7 @@ CREATE TABLE collezioni(
   titolo VARCHAR(50) NOT NULL,
   collezionista INT NOT NULL,
   tema VARCHAR(30) NOT NULL,
-  FOREIGN KEY(collezionista) REFERENCES collezionista(id)
+  FOREIGN KEY(collezionista) REFERENCES collezionisti(id)
 );
 
 CREATE TABLE francobolli(

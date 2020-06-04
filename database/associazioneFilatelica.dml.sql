@@ -8,13 +8,13 @@ INSERT INTO collezionisti(nome, cognome) VALUE
   ("Lucia", "Quaranta"),
   ("Andrea", "Vettori");
 
-INSERT INTO collezioni(titolo, tema) VALUE
-  ("Olimpiadi 1960", "sport"),
-  ("Hollywood", "cinema"),
-  ("Mondiali di Calcio 1990", "sport"),
-  ("Pop Art", "arte"),
-  ("Storia francese", "storia"),
-  ("Regno d'Italia", "storia");
+INSERT INTO collezioni(titolo, collezionista, tema) VALUE
+  ("Olimpiadi 1960", 1, "sport"),
+  ("Hollywood", 2, "cinema"),
+  ("Mondiali di Calcio 1990", 3, "sport"),
+  ("Pop Art", 4, "arte"),
+  ("Storia francese", 5, "storia"),
+  ("Regno d'Italia", 6, "storia");
 
 INSERT INTO francobolli(nome, collezione, data_emissione, prezzo, immagine) VALUE
   ("Equitazione", 1, '1960-09-11', 6.80, "equitazione.jpg"),
