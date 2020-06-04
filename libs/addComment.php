@@ -13,5 +13,5 @@ if (isset($_POST['comment'])) {
     die("Errore nell'inserimento del commento.");
   }
 }
-header("location: ../collection.php");
+header("location: ../aCollection.php");
 ?>

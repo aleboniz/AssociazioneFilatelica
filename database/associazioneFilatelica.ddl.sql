@@ -5,7 +5,8 @@ USE associazioneFilatelica;
 CREATE TABLE collezionisti(
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(30) NOT NULL,
-  cognome VARCHAR(30) NOT NULL
+  cognome VARCHAR(30) NOT NULL,
+  genere ENUM ("M", "F")
 );
 
 CREATE TABLE collezioni(
@@ -35,7 +36,7 @@ CREATE TABLE commenti(
 
 -- visualizzare il prezzo di ciascuna collezione (sommando i prezzi di ogni francobollo contenuto nella collezione)
 CREATE OR REPLACE VIEW prezzoCollezione AS
-SELECT c.id, round(sum(f.prezzo), 2) as prezzo
+SELECT c.id, c.titolo, c.collezionista, c.tema, round(sum(f.prezzo), 2) as prezzo
 FROM collezioni c, francobolli f
 WHERE c.id = f.collezione
 GROUP BY c.id;
