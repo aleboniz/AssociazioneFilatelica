@@ -1,7 +1,7 @@
 USE associazioneFilatelica;
 
 
-  -- 1) Selezionare, per ciascuna collezione, il titolo, il tema e il prezzo complessivo della collezione.
+  -- 1) Selezionare, per ciascuna collezione, il titolo, il tema, il prezzo, il nome e il cognome del collezionista
 
 -- prezzo per ciascuna collezione
 CREATE OR REPLACE VIEW prezzoCollezione AS
@@ -11,8 +11,8 @@ WHERE c.id = f.collezione
 GROUP BY c.id;
 
 
-SELECT c.titolo, c.tema, p.prezzo
-FROM collezioni c, prezzoCollezione p
+SELECT c.titolo, cl.nome, cl.cognome, c.tema, p.prezzo
+FROM collezionisti cl, collezioni c, prezzoCollezione p
 WHERE cl.id = c.collezionista AND c.id = p.id;
 
 

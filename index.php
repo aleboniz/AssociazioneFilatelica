@@ -8,25 +8,25 @@ try {  // Seleziona tutte le collezioni
 
   if (isset($_GET['price']) AND $_GET['price'] != "empty") {  //controllare il filtro del prezzo crescente/decrescente
     if ($_GET['price'] == 'asc') {
-      $sql = "SELECT c.id, c.titolo, c.tema, p.prezzo
-              FROM collezioni c, prezzoCollezione p
-              WHERE c.id = p.id
+      $sql = "SELECT c.id, cl.nome, cl.cognome, c.titolo, c.tema, p.prezzo
+              FROM collezionisti cl, collezioni c, prezzoCollezione p
+              WHERE cl.id = c.collezionista AND c.id = p.id
               ORDER BY p.prezzo ASC";
     } else {
-      $sql = "SELECT c.id, c.titolo, c.tema, p.prezzo
-              FROM collezioni c, prezzoCollezione p
-              WHERE c.id = p.id
+      $sql = "SELECT c.id, cl.nome, cl.cognome, c.titolo, c.tema, p.prezzo
+              FROM collezionisti cl, collezioni c, prezzoCollezione p
+              WHERE cl.id = c.collezionista AND c.id = p.id
               ORDER BY p.prezzo DESC";
     }
   } else if (isset($_GET['topic'])){
     $tema = $_GET['topic'];
-    $sql = "SELECT c.id, c.titolo, c.tema, p.prezzo
-            FROM collezioni c, prezzoCollezione p
-            WHERE c.id = p.id AND c.tema LIKE '%".$tema."%'";
+    $sql = "SELECT c.id, cl.nome, cl.cognome, c.titolo, c.tema, p.prezzo
+            FROM collezionisti cl, collezioni c, prezzoCollezione p
+            WHERE cl.id = c.collezionista AND c.id = p.id AND c.tema LIKE '%".$tema."%'";
   } else {
-    $sql = "SELECT c.id, c.titolo, c.tema, p.prezzo
-            FROM collezioni c, prezzoCollezione p
-            WHERE c.id = p.id";
+    $sql = "SELECT c.id, cl.nome, cl.cognome, c.titolo, c.tema, p.prezzo
+            FROM collezionisti cl, collezioni c, prezzoCollezione p
+            WHERE cl.id = c.collezionista AND c.id = p.id";
   }
 
   $rs = $dbConnection->query($sql);
@@ -64,12 +64,16 @@ try {  // Seleziona tutte le collezioni
      <th>Titolo</th>
      <th>Tema</th>
      <th>Prezzo</th>
+     <th>Nome</th>
+     <th>Cognome</th>
    </tr>
    <?php while ($row = $rs->fetch()) : ?>
      <tr>
        <td> <a href="collection.php?id=<?= $row['id'] ?>"> <?= $row['titolo'] ?> </a> </td>
        <td><?= $row['tema'] ?></td>
        <td>€ <?= $row['prezzo'] ?></td>
+       <td><?= $row['nome'] ?></td>
+       <td><?= $row['cognome'] ?></td>
      </tr>
      <?php $count = $count + 1; ?>
     <?php endwhile; ?>
