@@ -27,7 +27,7 @@ try {  // Seleziona tutti i collezionisti
             <div class="card-img-top"> <img src="media/donna.png" width="200" height="200"> </div>
            <?php endif; ?>
 
-           <div class="card-body"> <a href="aMember.php?id=<?= $row['id']?>" class="btn btn-primary">Guarda di più</a> </div>
+           <div class="card-body"> <a href="collection.php?id=<?= $row['id']?>" class="btn btn-primary">Guarda di più</a> </div>
          </div>
        <?php if($card % 3 == 2): ?> </div><br> <?php endif; ?>
     <?php $card = $card + 1; endwhile; ?>

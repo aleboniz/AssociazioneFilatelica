@@ -1,37 +1,76 @@
 <?php
 session_start();
-$title = "Francobolli";
-require "libs/header.php";
 require "libs/dbconnection.php";
 $card = 0;
 
-try {  // Seleziona tutti i francobolli della collezione 'collection'
+if (isset($_GET['id'])){
+  $isPoststamp = 1; $id = $_GET['id'];
+  try {  // Seleziona tutti i francobolli della collezione $id
 
-  if (isset($_GET['price']) AND $_GET['price'] != "empty") {  //controllare il filtro del prezzo crescente/decrescente
-    if ($_GET['price'] == 'asc') {
-      $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
-              FROM francobolli f JOIN collezioni c ON f.collezione = c.id
-              ORDER BY prezzo ASC";
+    if (isset($_POST['price']) AND $_POST['price'] != "empty") {  //controlla il filtro del prezzo crescente/decrescente
+      if ($_POST['price'] == 'asc') {
+        $sql = "SELECT * FROM francobolli WHERE collezione = $id ORDER BY prezzo ASC";
+      } else {
+        $sql = "SELECT * FROM francobolli WHERE collezione = $id ORDER BY prezzo DESC";
+      }
     } else {
-      $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
-              FROM francobolli f JOIN collezioni c ON f.collezione = c.id
-              ORDER BY prezzo DESC";
+      $sql = "SELECT * FROM francobolli WHERE collezione = $id";
     }
-  } else {
-    $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
-            FROM francobolli f JOIN collezioni c ON f.collezione = c.id";
+
+    $rs = $dbConnection->query($sql);
+
+    $sqlTitle = "SELECT titolo FROM collezioni WHERE id = $id";
+    $rsTitle = $dbConnection->query($sqlTitle);
+    while ($rowTitle = $rsTitle->fetch()){
+      $collectionTitle = $rowTitle['titolo'];
+      break;
+    }
+    $title = $collectionTitle;
+
+  } catch (PDOException $e) {
+    die('Errore nella lettura dei francobolli.');
   }
 
-  $rs = $dbConnection->query($sql);
+  try {  // Seleziona tutti i commenti della collezione $id
 
-} catch (PDOException $e) {
-  die('Errore nella lettura dei francobolli.');
+    $sqlComment = "SELECT commento FROM commenti WHERE collezione = $id ORDER BY id DESC";
+    $rsComment = $dbConnection->query($sqlComment);
+
+  } catch (PDOException $e) {
+    die('Errore nella lettura dei commenti.');
+  }
+
+} else {
+  $isPoststamp = 0; $title = "Francobolli";
+  try {  // Seleziona tutti i francobolli presenti nel sistema
+
+    if (isset($_POST['price']) AND $_POST['price'] != "empty") {  //controlla il filtro del prezzo crescente/decrescente
+      if ($_POST['price'] == 'asc') {
+        $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
+                FROM francobolli f JOIN collezioni c ON f.collezione = c.id
+                ORDER BY prezzo ASC";
+      } else {
+        $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
+                FROM francobolli f JOIN collezioni c ON f.collezione = c.id
+                ORDER BY prezzo DESC";
+      }
+    } else {
+      $sql = "SELECT c.titolo, c.id, f.nome, f.prezzo, f.data_emissione, f.immagine
+              FROM francobolli f JOIN collezioni c ON f.collezione = c.id";
+    }
+
+    $rs = $dbConnection->query($sql);
+
+  } catch (PDOException $e) {
+    die('Errore nella lettura dei francobolli.');
+  }
 }
-
+require "libs/header.php";
 ?>
-<br><h1 class="text-center">Francobolli</h1><br>
 
-<form action="poststamp.php?id=<?= $id ?>">
+<br><h1 class="text-center"><?= $title ?></h1><br>
+
+<form action="" method="post">
   <label for="price">Ordina per prezzo:</label>
   <select name="price" id="price">
     <option value="empty"></option>
@@ -55,13 +94,34 @@ try {  // Seleziona tutti i francobolli della collezione 'collection'
       <div class="card-body">
         <p><?= $row['data_emissione'] ?></p>
         <p>€ <?= $row['prezzo'] ?></p>
-        <p><?= $row['titolo'] ?></p>
-
-        <a href="aCollection.php?id=<?= $row['id'] ?>" class="btn btn-primary">Guarda tutta la collezione</a>
+        <?php if($isPoststamp == 0): ?>
+          <p><?= $row['titolo'] ?></p>
+          <a href="poststamp.php?id=<?= $row['id'] ?>" class="btn btn-primary">Guarda tutta la collezione</a>
+        <?php endif; ?>
       </div>
     </div>
   <?php if($card % 5 == 4): ?> </div><br> <?php endif; ?>
 <?php $card = $card + 1; endwhile; ?>
-</div><br><br>
+</div><br>
+
+<?php if($isPoststamp == 1): ?>
+  <div class="text-center">
+    <h4>Commenti</h4>
+    <div>
+      <form action="libs/addComment.php?id=<?= $id ?>" method="post">
+        <label style="font-size:18px">Inserisci il tuo commento</label>
+        <input type="text" name="comment">
+        <input type="submit" value="Commenta" class="btn btn-primary">
+      </form>
+    </div><br>
+
+    <?php $comment = 0; while ($row = $rsComment->fetch()) : ?>
+      <?php if ($comment % 2 == 0) { $class = "bg-secondary"; } else { $class = "bg-light"; } ?>
+      <div class="<?= $class; ?>">
+        <p><?= $row['commento'] ?></p>
+      </div>
+     <?php $comment= $comment + 1; endwhile; ?>
+  </div>
+<?php endif; ?><br>
 
 <?php require "libs/footer.php"; ?>

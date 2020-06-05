@@ -2,6 +2,7 @@
 $title = "Home";
 require "libs/header.php";
 ?>
+
 <br><h1 class="text-center">Associazione filatelica</h2>
 <br><br>
 <div class="card-deck">

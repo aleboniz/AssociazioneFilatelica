@@ -3,17 +3,16 @@ USE associazioneFilatelica;
 
   -- 1) Selezionare, per ciascuna collezione, il titolo, il tema, il prezzo, il nome e il cognome del collezionista
 
--- prezzo per ciascuna collezione
+-- visualizzare il prezzo di ciascuna collezione (sommando i prezzi di ogni francobollo contenuto nella collezione)
 CREATE OR REPLACE VIEW prezzoCollezione AS
-SELECT c.id, round(sum(f.prezzo), 2) as prezzo
+SELECT c.id, c.titolo, c.collezionista, c.tema, round(sum(f.prezzo), 2) as prezzo
 FROM collezioni c, francobolli f
 WHERE c.id = f.collezione
 GROUP BY c.id;
 
-
-SELECT c.titolo, cl.nome, cl.cognome, c.tema, p.prezzo
-FROM collezionisti cl, collezioni c, prezzoCollezione p
-WHERE cl.id = c.collezionista AND c.id = p.id;
+SELECT p.titolo, p.id, c.nome, c.cognome, p.tema, p.prezzo
+FROM collezionisti c, prezzoCollezione p
+WHERE c.id = p.collezionista;
 
 
 
