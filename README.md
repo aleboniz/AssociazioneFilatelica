@@ -1,9 +1,9 @@
 # AssociazioneFilatelica
 
-##Descrizione
+## Descrizione
 Un’associazione filatelica vuole pubblicare con un’applicazione web le informazioni sulle collezioni dei soci, fornendo anche la possibilità di lasciare commenti anonimi.
 
-##Procedura
+## Procedura
 
 1. avviare XAMPP
 2. clonare la repository all'interno dell'ambiente XAMPP
