@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "libs/dbconnection.php";
 $title = "Collezionisti";
 require "libs/header.php";

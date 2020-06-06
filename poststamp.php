@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "libs/dbconnection.php";
 $card = 0;
 

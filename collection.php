@@ -5,7 +5,7 @@ $count = $card = 0;
 if (isset($_GET['id'])) {
   $isCollection = 1; $id = $_GET['id'];
 
-  try {  // Seleziona tutti i collezionisti
+  try {  // Seleziona le collezioni di un collezionista in particolare
 
     if (isset($_POST['title'])){
       $titolo = '"%'.$_POST['title'].'%"';
