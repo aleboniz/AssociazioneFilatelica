@@ -1,6 +1,6 @@
 USE associazioneFilatelica;
 
-INSERT INTO collezionisti(nome, cognome, genere) VALUE
+INSERT INTO soci(nome, cognome, genere) VALUE
   ("Mario", "Guanciale", "M"),
   ("Luigi", "Serniotti", "M"),
   ("Sara", "Bonifacio", "F"),

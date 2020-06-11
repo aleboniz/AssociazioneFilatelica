@@ -1,12 +1,13 @@
+<!-- Pagina che mosra l'elenco dei soci-->
 <?php
 require "libs/dbconnection.php";
-$title = "Collezionisti";
+$title = "Soci collezionisti";
 require "libs/header.php";
 $card = 0;
 
 try {  // Seleziona tutti i collezionisti
 
-  $sql = "SELECT * FROM collezionisti";
+  $sql = "SELECT * FROM soci";
   $rs = $dbConnection->query($sql);
 
 } catch (PDOException $e) {

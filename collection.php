@@ -1,3 +1,5 @@
+<!-- Pagina che mosra l'elenco di tutte le collezioni,
+se viene passato il parametro id, allora mostra l'elenco delle collezioni di un socio in particolare -->
 <?php
 require "libs/dbconnection.php";
 $count = $card = 0;
@@ -25,7 +27,7 @@ if (isset($_GET['id'])) {
 
   try {  // Seleziona il nome e il cognome del collezionista
 
-    $sqlName = "SELECT * FROM collezionisti WHERE id = $id";
+    $sqlName = "SELECT * FROM soci WHERE id = $id";
     $rsName = $dbConnection->query($sqlName);
 
   } catch (PDOException $e) {
@@ -43,18 +45,18 @@ if (isset($_GET['id'])) {
 
     if (isset($_POST['title'])){
       $titolo = '"%'.$_POST['title'].'%"';
-      $sql = "SELECT p.id, c.nome, c.cognome, p.titolo, p.tema, p.prezzo
-              FROM collezionisti c, prezzoCollezione p
-              WHERE c.id = p.collezionista AND p.titolo LIKE $titolo";
+      $sql = "SELECT p.id, s.nome, s.cognome, p.titolo, p.tema, p.prezzo
+              FROM soci s, prezzoCollezione p
+              WHERE s.id = p.collezionista AND p.titolo LIKE $titolo";
     } else if (isset($_POST['topic'])){
       $tema = '"%'.$_POST['topic'].'%"';
-      $sql = "SELECT p.id, c.nome, c.cognome, p.titolo, p.tema, p.prezzo
-              FROM collezionisti c, prezzoCollezione p
-              WHERE c.id = p.collezionista AND p.tema LIKE $tema";
+      $sql = "SELECT p.id, s.nome, s.cognome, p.titolo, p.tema, p.prezzo
+              FROM soci s, prezzoCollezione p
+              WHERE s.id = p.collezionista AND p.tema LIKE $tema";
     } else {
-      $sql = "SELECT p.id, c.nome, c.cognome, p.titolo, p.tema, p.prezzo
-              FROM collezionisti c, prezzoCollezione p
-              WHERE c.id = p.collezionista";
+      $sql = "SELECT p.id, s.nome, s.cognome, p.titolo, p.tema, p.prezzo
+              FROM soci s, prezzoCollezione p
+              WHERE s.id = p.collezionista";
     }
 
     $rs = $dbConnection->query($sql);

@@ -1,3 +1,6 @@
+<!-- Pagina che mosra l'elenco di tutti i francobolli,
+se viene passato il parametro id, allora mostra l'elenco dei francobolli di una collezione in particolare,
+                                                            alla quale è possibile aggiungere un commento -->
 <?php
 require "libs/dbconnection.php";
 $card = 0;

@@ -10,9 +10,9 @@ FROM collezioni c, francobolli f
 WHERE c.id = f.collezione
 GROUP BY c.id;
 
-SELECT p.titolo, p.id, c.nome, c.cognome, p.tema, p.prezzo
-FROM collezionisti c, prezzoCollezione p
-WHERE c.id = p.collezionista;
+SELECT p.titolo, p.id, s.nome, s.cognome, p.tema, p.prezzo
+FROM soci s, prezzoCollezione p
+WHERE s.id = p.collezionista;
 
 
 
